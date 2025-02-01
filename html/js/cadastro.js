@@ -1,4 +1,5 @@
-//Cadastro do produto
+
+//Codigo aleatorio
 const gerar = () => {
     event.preventDefault()
     let min = 10 ** 9
@@ -35,9 +36,10 @@ const salvar = () => {
     let preco = document.querySelector('.input-preco').value
     let estoqueInicial = document.querySelector('.input-estoque-inicial').value
 
-    produtosEstoque.push({codigo: codigo, nome: nome, validade: validade, lote: lote, tipo: tipo, preco: preco, estoqueInicial: estoqueInicial})
+    produtosEstoque.push({codigo: codigo, nome: nome, validade: validade, lote: lote, tipo: tipo, preco: preco, estoqueInicial: estoqueInicial, metodo: "Cadastro"})
     localStorage.setItem('produtos', JSON.stringify(produtosEstoque))
     
+
     const form = document.querySelector('form')
     form.reset()
 }

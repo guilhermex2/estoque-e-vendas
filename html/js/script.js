@@ -13,7 +13,7 @@ function carregarProdutos() {
             <td>${produto.codigo}</td>
             <td>${produto.nome}</td>
             <td>${produto.validade}</td>
-            <td>${produto.quantidade}</td>
+            <td>${produto.estoqueInicial}</td>
             <td><a href="#">Visualizar</a></td>
         `;
 
