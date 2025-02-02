@@ -16,7 +16,6 @@
     <section class="main">
         <div class="menu">
             <div class="buttons">
-                <a href="dashboard.html" class="dashboard-btn">DASHBOARD</a>
                 <a href="estoque.html" class="estoque-btn">ESTOQUE</a>
                 <a href="estrada_saidas.html" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
                 <a href="cadastro.html" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
@@ -25,8 +24,25 @@
             </div>
         </div>
         <div class="area">
-            <div class="title-section">
-                <h1>Vendas</h1>
+            <div class="container-vendas">
+                <div class="title-vendas">
+                    <h1>Realizar venda</h1>
+                </div>
+                <div class="produto-pesquisar">
+                    <input type="text" placeholder="Nome do produto" class="input-venda">
+                    <button>Pesquisar</button>
+                </div>
+                <div class="area-produto">
+                    <table>
+                        <thead>
+                            <th>NOME</th>
+                            <th>PREÇO</th>
+                            <th>QUANTIDADE</th>
+                        </thead>
+                    </table>
+                    <div class="produto">...</div>
+                    <button>Vender</button>
+                </div>
             </div>
         </div>
     </section>

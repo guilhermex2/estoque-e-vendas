@@ -16,7 +16,6 @@
     <section class="main">
         <div class="menu">
             <div class="buttons">
-                <a href="dashboard.html" class="dashboard-btn">DASHBOARD</a>
                 <a href="estoque.html" class="estoque-btn">ESTOQUE</a>
                 <a href="estrada_saidas.html" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
                 <a href="cadastro.html" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
@@ -25,9 +24,6 @@
             </div>
         </div>
         <div class="area">
-            <div class="title-section">
-                <h1>Cadastro Produto</h1>
-            </div>
             <form action="" method="post">
                 <div class="codigo">
                     <label for="">Codigo:</label><br>
@@ -40,20 +36,11 @@
                 </div>
                 <div class="validade">
                     <label for="">Validade:</label><br>
-                    <input type="text" name="" id="" class="input-validade" placeholder="Ex: 10-01-2025" required>
+                    <input type="date" name="" id="" class="input-validade" placeholder="Ex: 10-01-2025" required>
                 </div>
                 <div class="lote">
                     <label for="">Lote:</label><br>
                     <input type="text" name="" id="" class="input-lote" required>
-                </div>
-                <div class="tipo">
-                    <label for="">Tipo:</label>
-                    <select name="Tipo" id="">
-                        <option value="Opção1">Opção 1</option>
-                        <option value="Opção2">Opção 2</option>
-                        <option value="Opção3">Opção 3</option>
-                        <option value="Opção4">Devolução</option>
-                    </select>
                 </div>
                 <div class="observacoes">
                     <label for="">Observações:</label><br>
@@ -64,11 +51,8 @@
                     <input type="text" class="input-preco" required>
                 </div>
                 <div class="estoque-inicial">
-                    <label for="">Estoque Inicial</label><br>
+                    <label for="">Estoque Inicial:</label><br>
                     <input type="text" class="input-estoque-inicial" required>
-                </div>
-                <div class="foto-produto">
-                    <label for="">Inserir Foto:</label><br>
                 </div>
                 <button type="submit" class="salvar">Salvar</button>
             </form>
