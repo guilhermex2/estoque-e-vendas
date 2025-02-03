@@ -34,7 +34,7 @@ function adicionarEventosDeClique() {
     const closeModalBtn = document.querySelector(".fechar-modal");
 
     // Evento para abrir o modal (visualização)
-    document.querySelectorAll(".view-icon").forEach(eyeIcon => {
+    document.querySelectorAll(".bi-eye-fill").forEach(eyeIcon => {
         eyeIcon.addEventListener("click", function () {
             const tr = this.closest("tr");
             const codigoProduto = tr.getAttribute("data-codigo");
@@ -44,6 +44,7 @@ function adicionarEventosDeClique() {
 
             if (produto) {
                 document.querySelector('.nome-modal').textContent = `Nome: ${produto.nome}`;
+                document.querySelector('.codigo-modal').textContent = `Código: ${produto.codigo}`;
                 document.querySelector('.validade-modal').textContent = `Validade: ${produto.validade}`;
                 document.querySelector('.lote-modal').textContent = `Lote: ${produto.lote || 'Não informado'}`;
                 document.querySelector('.tipo-modal').textContent = `Tipo: ${produto.tipo || 'Não informado'}`;

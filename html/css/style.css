@@ -204,6 +204,7 @@ dialog{
     height: 480px;
 }
 .area-prod-modal{
+    line-height: 25px;
     margin-top: 5px;
     margin-left: 10px;
 }
