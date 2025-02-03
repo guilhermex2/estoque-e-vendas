@@ -74,7 +74,7 @@ header{
 }
 table{
     width: 100%;
-    background-color: #ccc;
+    background-color: #d1cccc;
     text-align: left;
     font-family: 'Inter';
     border-collapse: collapse;
@@ -171,6 +171,12 @@ select{
     margin-top: 20px;
     margin-bottom: 30px;
 }
+.area-produto table{
+    width: 500px;
+}
+.area-produto table th{
+    padding-right: 150px;
+}
 /*Entrada e saídas*/
 .voltar{
     margin-top: 20px;
@@ -190,18 +196,26 @@ select{
 }
 /*Modal estoque*/
 dialog{
+    border: 1px solid black;
+    font-family: 'Inter';
     margin: auto;
-    display: none;
     border-radius: 20px;
-    width: 1280px;
-    height: 720px;
+    width: 550px;
+    height: 480px;
 }
-.img-prod img{
-    width: 320px;
-    height: 450px;
+.area-prod-modal{
+    margin-top: 5px;
+    margin-left: 10px;
 }
-
 .fechar-modal{
-    width: 60px;
-    height: 25px;
+    margin-top: 20px;
+    background-color: rgb(68, 0, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Inter';
+    font-weight: 700;
+    width: 110px;
+    height: 35px;
 }

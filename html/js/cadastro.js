@@ -32,14 +32,13 @@ const salvar = () => {
     let nome = document.querySelector('.input-nome').value
     let validade = document.querySelector('.input-validade').value
     let lote = document.querySelector('.input-lote').value
-    let tipo = document.querySelector('select').value
     let preco = document.querySelector('.input-preco').value
     let estoqueInicial = document.querySelector('.input-estoque-inicial').value
 
-    produtosEstoque.push({codigo: codigo, nome: nome, validade: validade, lote: lote, tipo: tipo, preco: preco, estoqueInicial: estoqueInicial, metodo: "Cadastro"})
+    produtosEstoque.push({codigo: codigo, nome: nome, validade: validade, lote: lote, preco: preco, estoqueInicial: estoqueInicial, metodo: "Cadastro"})
     localStorage.setItem('produtos', JSON.stringify(produtosEstoque))
     
-
+    alert('Produto cadastrado!')
     const form = document.querySelector('form')
     form.reset()
 }
