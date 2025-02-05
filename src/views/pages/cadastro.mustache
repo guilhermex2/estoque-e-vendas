@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Sistema - Estoque</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo"><h1>DevEstoque</h1></div>
+        </div>
+    </header>
+
+    <section class="main">
+        <div class="menu">
+            <div class="buttons">
+                <a href="/" class="estoque-btn">ESTOQUE</a>
+                <a href="/entrada&saidas" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
+                <a href="/cadastro" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
+                <a href="/vendas" class="vendas-btn">VENDAS</a>
+                <a href="/suporte" class="suporte-btn">SUPORTE</a>
+            </div>
+        </div>
+        <div class="area">
+            <form action="" method="post">
+                <div class="codigo">
+                    <label for="">Codigo:</label><br>
+                    <input type="text" name="" id="" class="input-codigo" required>
+                    <button class="gerar">Gerar</button>
+                </div>
+                <div class="nome">
+                    <label for="">Nome:</label><br>
+                    <input type="text" placeholder="Nome Produto" class="input-nome" required>
+                </div>
+                <div class="validade">
+                    <label for="">Validade:</label><br>
+                    <input type="date" name="" id="" class="input-validade" placeholder="Ex: 10-01-2025" required>
+                </div>
+                <div class="lote">
+                    <label for="">Lote:</label><br>
+                    <input type="text" name="" id="" class="input-lote" required>
+                </div>
+                <div class="observacoes">
+                    <label for="">Observações:</label><br>
+                    <textarea name="" id="" cols="30" rows="5" class="observacoes-txt"></textarea>
+                </div>
+                <div class="preco">
+                    <label for="">Preço Venda Un.:</label><br>
+                    <input type="text" class="input-preco" required>
+                </div>
+                <div class="estoque-inicial">
+                    <label for="">Estoque Inicial:</label><br>
+                    <input type="text" class="input-estoque-inicial" required>
+                </div>
+                <button type="submit" class="salvar">Salvar</button>
+            </form>
+        </div>
+    </section>

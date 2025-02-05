@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Sistema - Estoque</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo"><h1>DevEstoque</h1></div>
+        </div>
+    </header>
+
+    <section class="main">
+        <div class="menu">
+            <div class="buttons">
+                <a href="/" class="estoque-btn">ESTOQUE</a>
+                <a href="/entrada&saidas" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
+                <a href="/cadastro" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
+                <a href="/vendas" class="vendas-btn">VENDAS</a>
+                <a href="/suporte" class="suporte-btn">SUPORTE</a>
+            </div>
+        </div>
+        <div class="area">
+            <div class="container-vendas">
+                <div class="title-vendas">
+                    <h1>Realizar venda</h1>
+                </div>
+                <div class="produto-pesquisar">
+                    <input type="text" placeholder="Nome do produto ou código" class="input-venda">
+                    <button>Pesquisar</button>
+                </div>
+                <div class="area-produto">
+                    <table>
+                        <thead>
+                            <th>NOME</th>
+                            <th>PREÇO</th>
+                            <th>QUANTIDADE</th>
+                        </thead>
+                    </table>
+                    <div class="produto">...</div>
+                    <button>Vender</button>
+                </div>
+            </div>
+        </div>
+    </section>
