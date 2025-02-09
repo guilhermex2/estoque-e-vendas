@@ -28,7 +28,7 @@
                 <div class="codigo">
                     <label for="">Codigo:</label><br>
                     <input type="text" name="codigo" id="" class="input-codigo" required>
-                    <button class="number">Gerar</button>
+                    <button class="gerar">Gerar</button>
                 </div>
                 <div class="nome">
                     <label for="">Nome:</label><br>
@@ -58,3 +58,16 @@
             </form>
         </div>
     </section>
+
+    <script>
+        const gerar = () => {
+            event.preventDefault()
+            let min = 10 ** 9
+            let max = 10 ** 10 - 1 
+            let code = Math.floor(Math.random() * (max - min + 1)) + min
+
+            document.querySelector('.input-codigo').value = code
+        }
+        let btnGerar = document.querySelector('.gerar').addEventListener('click', gerar)
+    
+    </script>
