@@ -70,6 +70,30 @@ const client = new MongoClient(process.env.MONGO_URI as string)
 
 
 server.get('/', home)
+server.delete("/:codigo", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const codigo = req.params.codigo;
+
+        // Verificar se o código é válido
+        if (!codigo) {
+            res.status(400).json({ message: 'Código inválido' });
+            return;
+        }
+
+        // Remover o item
+        const deletedItem = await produto.findOneAndDelete({ codigo });
+
+        if (!deletedItem) {
+            res.status(404).json({ message: 'Item não encontrado' });
+            return;
+        }
+
+        res.status(200).json({ message: 'Item removido com sucesso', deletedItem });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao remover o item', error });
+    }
+});
+
 server.get('/cadastro', cad)
 server.post('/cadastro', async(req, res) => {
     const {codigo, nome, validade, lote, observacoes, preco, estoqueInicial} = req.body

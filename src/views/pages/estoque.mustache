@@ -73,3 +73,36 @@
             </div>
         </div>
     </section>
+    <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const deleteIcons = document.querySelectorAll(".delete-icon");
+
+              deleteIcons.forEach(icon => {
+                icon.addEventListener("click", async function () {
+                const row = this.closest("tr"); // Obtém a linha da tabela
+                const codigo = row.dataset.codigo; // Obtém o código do produto
+
+                if (!codigo) return;
+
+                const confirmDelete = confirm(`Tem certeza que deseja excluir o item com código ${codigo}?`);
+                if (!confirmDelete) return;
+
+                try {
+                    const response = await fetch(`/${codigo}`, {
+                        method: "DELETE",
+                    });
+
+                    if (response.ok) {
+                        row.remove(); // Remove a linha da tabela
+                        alert("Produto removido com sucesso!");
+                    } else {
+                        alert("Erro ao remover o produto.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao remover produto:", error);
+                }
+            });
+        });
+    });
+
+    </script>
