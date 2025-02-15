@@ -28,18 +28,47 @@
                 <table>
                     <thead>
                       <tr>
-                        <th>TIPO</th>
                         <th>CÓDIGO</th>
                         <th>PRODUTO</th>
                         <th>VALIDADE</th>
+                        <th>LOTE</th>
+                        <th>PREÇO</th>
                         <th>QUANTIDADE</th>
-                        <th>AÇÕES</th>
+                        <th>DATA ENTRADA</th>
                       </tr>
                     </thead>
                     <tbody>
+                    {{#entradas}}
+                        <tr>
+                            <td>{{codigo}}</td>
+                            <td>{{nome}}</td>
+                            <td>{{validade}}</td>
+                            <td>{{lote}}</td>
+                            <td>{{preco}}</td>
+                            <td>{{quantidade}}</td>
+                            <td>{{dataEntrada}}</td>
+                        </tr>
+                        {{/entradas}}
                     </tbody>
                   </table>
             </div>
-            <button class="voltar"><a href="/entrada&saidas">Voltar</a></button>
+            <div class="btns">
+                <button class="voltar"><a href="/entrada&saidas">Voltar</a></button>
+                <button class="limpar" onclick="(limparEntradas())"><a href="">Limpar Registros</a></button>
+            </div>
         </div>
     </section>
+    <script>
+        async function limparEntradas() {
+            if (confirm("Tem certeza que deseja limpar todas as entradas?")) {
+                const response = await fetch('/limpar-entradas', { method: 'DELETE' });
+                if (response.ok) {
+                    alert("Entradas removidas com sucesso!");
+                    location.reload();
+                } else {
+                    alert("Erro ao limpar as entradas.");
+                }
+            }
+        }
+    </script>
+    
