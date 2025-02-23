@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from "mongoose"
 import produto from '../models/produto'
 import Entrada from '../models/entrada'
+import Venda from '../models/venda'
 
 dotenv.config()
 mongoose.connect(process.env.MONGO_URI as string)
@@ -75,8 +76,13 @@ export const renderEeS = (req: Request, res: Response) => {
     res.render('pages/entrada&saidas')
 }
 
-export const saidas = (req: Request, res: Response) => {
-    res.render('pages/saidas')
+export const saidas = async (req: Request, res: Response) => {
+    try {
+        const vendas = await Venda.find().sort({ dataVenda: -1 }); // Ordena por data
+        res.render('pages/saidas', {vendas});
+    } catch (error) {
+        res.status(500).json({ sucesso: false, erro: "Erro ao buscar vendas" });
+    }
 }
 
 export const vendas = async (req: Request, res: Response) => {
@@ -105,19 +111,30 @@ export const vender = async (req: Request, res: Response) => {
 
 export const retirarProdutos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { produtos } = req.body; // Recebe os produtos e quantidades a serem retiradas
+        const { produtos } = req.body; // Produtos vendidos
 
         for (const item of produtos) {
             const { id, quantidade } = item;
-            console.log(`Atualizando produto ID: ${id}, Removendo: ${quantidade}`);
+            console.log(`Registrando venda - Produto ID: ${id}, Quantidade: ${quantidade}`);
 
             // Busca o produto antes de atualizar
             const produtoExistente = await produto.findById(id);
             if (!produtoExistente) {
-                console.log(`Produto com ID ${id} não encontrado.`);
                 res.status(404).json({ sucesso: false, erro: `Produto com ID ${id} não encontrado!` });
-                return
+                return 
             }
+
+            //  Registra a venda no banco
+            const novaVenda = new Venda({
+                codigo: produtoExistente.codigo,
+                produto: produtoExistente._id,
+                nomeProduto: produtoExistente.nome,
+                quantidade,
+                precoUnitario: produtoExistente.preco,
+                precoTotal: produtoExistente.preco * quantidade,
+            });
+
+            await novaVenda.save(); // Salva no MongoDB
 
             // Atualiza o estoque subtraindo a quantidade vendida
             const produtoAtualizado = await produto.updateOne(
@@ -125,21 +142,19 @@ export const retirarProdutos = async (req: Request, res: Response): Promise<void
                 { $inc: { estoqueInicial: -quantidade } }
             );
 
-            console.log("Resultado da atualização:", produtoAtualizado);
-
             if (produtoAtualizado.modifiedCount === 0) {
                 res.status(500).json({ sucesso: false, erro: "Falha ao atualizar estoque." });
                 return 
             }
         }
 
-        res.json({ sucesso: true, mensagem: "Produtos retirados com sucesso!" });
+        res.json({ sucesso: true, mensagem: "Venda registrada e estoque atualizado!" });
 
     } catch (error) {
-        console.error("Erro ao retirar produtos:", error);
+        console.error("Erro ao registrar venda:", error);
         res.status(500).json({ sucesso: false, erro: "Erro ao processar a venda." });
     }
-}
+};
 
 export const deletaProduto = async (req: Request, res: Response): Promise<void> => {
     try {

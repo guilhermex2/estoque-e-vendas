@@ -28,31 +28,23 @@
                 <table>
                     <thead>
                       <tr>
-                        <th>TIPO</th>
                         <th>CÓDIGO</th>
                         <th>PRODUTO</th>
-                        <th>VALIDADE</th>
                         <th>QUANTIDADE</th>
-                        <th>AÇÕES</th>
+                        <th>PREÇO VENDA</th>
+                        <th>DATA SAÍDA</th>
                       </tr>
                     </thead>
                     <tbody>
+                    {{#vendas}}
                       <tr>
-                        <td>Dados 1</td>
-                        <td>Dados 2</td>
-                        <td>Dados 3</td>
-                        <td>Dados 4</td>
-                        <td>Dados 5</td>
-                        <td>Visualizar | Excluir</td>   
+                          <td>{{codigo}}</td>
+                          <td>{{nomeProduto}}</td>
+                          <td>{{quantidade}}</td>
+                          <td>{{precoTotal}}</td>
+                          <td>{{dataVenda}}</td>
                       </tr>
-                      <tr>
-                        <td>Dados 6</td>
-                        <td>Dados 7</td>
-                        <td>Dados 8</td>
-                        <td>Dados 9</td>
-                        <td>Dados 10</td>
-                        <td>Visualizar | Excluir</td>
-                      </tr>
+                    {{/vendas}}
                     </tbody>
                   </table>
             </div>
