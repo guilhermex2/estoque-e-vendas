@@ -79,8 +79,66 @@ export const saidas = (req: Request, res: Response) => {
     res.render('pages/saidas')
 }
 
-export const vendas = (req: Request, res: Response) => {
-    res.render('pages/vendas')
+export const vendas = async (req: Request, res: Response) => {
+    res.render('pages/vendas', {produto: null})
+}
+
+export const vender = async (req: Request, res: Response) => {
+    const nomeProduto = req.body.nome;  // Pegando o nome enviado pelo frontend
+    console.log("Produto buscado:", nomeProduto);
+
+    try {
+        const item = await produto.findOne({ nome: nomeProduto });
+
+        if (item) {
+            console.log("Produto encontrado:", item);
+            res.json({ sucesso: true, produto: item }); // Retorna o produto encontrado
+        } else {
+            console.log("Produto não encontrado!");
+            res.status(404).json({ sucesso: false, erro: "Produto não encontrado!" }); // Retorna erro 404
+        }
+    } catch (err) {
+        console.error("Erro ao buscar produto:", err);
+        res.status(500).json({ sucesso: false, erro: "Erro ao buscar produto" }); // Retorna erro 500
+    }
+}
+
+export const retirarProdutos = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { produtos } = req.body; // Recebe os produtos e quantidades a serem retiradas
+
+        for (const item of produtos) {
+            const { id, quantidade } = item;
+            console.log(`Atualizando produto ID: ${id}, Removendo: ${quantidade}`);
+
+            // Busca o produto antes de atualizar
+            const produtoExistente = await produto.findById(id);
+            if (!produtoExistente) {
+                console.log(`Produto com ID ${id} não encontrado.`);
+                res.status(404).json({ sucesso: false, erro: `Produto com ID ${id} não encontrado!` });
+                return
+            }
+
+            // Atualiza o estoque subtraindo a quantidade vendida
+            const produtoAtualizado = await produto.updateOne(
+                { _id: id }, 
+                { $inc: { estoqueInicial: -quantidade } }
+            );
+
+            console.log("Resultado da atualização:", produtoAtualizado);
+
+            if (produtoAtualizado.modifiedCount === 0) {
+                res.status(500).json({ sucesso: false, erro: "Falha ao atualizar estoque." });
+                return 
+            }
+        }
+
+        res.json({ sucesso: true, mensagem: "Produtos retirados com sucesso!" });
+
+    } catch (error) {
+        console.error("Erro ao retirar produtos:", error);
+        res.status(500).json({ sucesso: false, erro: "Erro ao processar a venda." });
+    }
 }
 
 export const deletaProduto = async (req: Request, res: Response): Promise<void> => {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Sistema - Estoque</title>
 </head>
 <body>
@@ -28,21 +28,142 @@
                 <div class="title-vendas">
                     <h1>Realizar venda</h1>
                 </div>
-                <div class="produto-pesquisar">
-                    <input type="text" placeholder="Nome do produto ou código" class="input-venda">
-                    <button>Pesquisar</button>
-                </div>
+                <form id="form-busca-produto" method="POST">
+                    <div class="produto-pesquisar">
+                        <input type="text" name="nome" id="termo-busca" placeholder="Nome do produto ou código" class="input-venda">
+                        <button type="submit">Pesquisar</button>
+                    </div>
+                </form>
                 <div class="area-produto">
                     <table>
                         <thead>
                             <th>NOME</th>
                             <th>PREÇO</th>
-                            <th>QUANTIDADE</th>
+                            <th>VALIDADE</th>
+                            <th>QUANTIDADE ESTOQUE</th>
+                            <th>QUANTIDADE VENDA</th>
                         </thead>
+                        <tbody id="resultado-busca">
+                            {{#item}}
+                            <tr class="produto">
+                                <td>{{nome}}</td>
+                                <td>{{preco}}</td>
+                                <td>{{validade}}</td>
+                                <td>{{estoqueInicial}}</td>
+                            </tr>
+                            <button class="menos">-</button>
+                            <span class="quantidade-selecionada">0</span>
+                            <button class="mais">+</button>
+                            {{/item}}
+                        </tbody>
                     </table>
-                    <div class="produto">...</div>
-                    <button>Vender</button>
+                    <button id="vender">Vender</button>
                 </div>
             </div>
         </div>
     </section>
+<script>
+const produtosBuscados = []; // Array para armazenar os produtos buscados
+
+    document.getElementById("form-busca-produto").addEventListener("submit", async function (event) {
+    event.preventDefault();  // Impede o reload da página
+
+    const inputNome = document.getElementById("termo-busca").value;
+    const resultadoDiv = document.getElementById("resultado-busca");
+    const btnMais = document.querySelector('.mais')
+    const btnMenos = document.querySelector('.menos')   
+
+    try {
+        const response = await fetch("/vender", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ nome: inputNome })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.sucesso) {
+    // Adiciona o novo produto à lista
+    produtosBuscados.push(data.produto);
+
+    // Limpa a div e exibe todos os produtos armazenados
+    resultadoDiv.innerHTML = ""; // Limpa o conteúdo anterior
+    produtosBuscados.forEach(produto => {
+        resultadoDiv.innerHTML += `
+            <tr class="produto" data-id="${produto._id}">
+                <td>${produto.nome}</td>
+                <td>R$ ${produto.preco}</td>
+                <td>${produto.validade}</td>
+                <td>${produto.estoqueInicial}</td>
+                <td>
+                    <button class="menos">-</button>
+                    <span class="quantidade-selecionada">0</span>
+                    <button class="mais">+</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    // Chama a função para adicionar eventos aos botões após a inserção
+    adicionarEventosBotoes();
+}
+ else {
+            resultadoDiv.innerHTML = `<p style="color: red;">${data.erro}</p>`;
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+        resultadoDiv.innerHTML = `<p style="color: red;">Erro ao processar a busca.</p>`;
+    }
+});
+
+document.getElementById("vender").addEventListener("click", function () {
+    const produtosSelecionados = [];
+
+    document.querySelectorAll(".produto").forEach(produto => {
+        const id = produto.dataset.id;
+        const quantidade = parseInt(produto.querySelector(".quantidade-selecionada").textContent);
+
+        if (quantidade > 0) {
+            produtosSelecionados.push({ id, quantidade });
+        }
+    });
+
+    // Envia para o backend via fetch
+    fetch("/retirar-produtos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ produtos: produtosSelecionados }),
+    })
+    .then(response => response.json())
+    .then(data => alert("Retirada confirmada!"))
+    .catch(error => console.error("Erro ao retirar produtos:", error));
+});
+function adicionarEventosBotoes() {
+    document.querySelectorAll(".produto").forEach(produto => {
+        const btnMais = produto.querySelector(".mais");
+        const btnMenos = produto.querySelector(".menos");
+        const spanQuantidade = produto.querySelector(".quantidade-selecionada");
+
+        let quantidade = 0; // Quantidade inicial selecionada
+
+        btnMais.addEventListener("click", function () {
+            quantidade++;
+            spanQuantidade.textContent = quantidade;
+        });
+
+        btnMenos.addEventListener("click", function () {
+            if (quantidade > 0) {
+                quantidade--;
+                spanQuantidade.textContent = quantidade;
+            }
+        });
+    });
+}
+
+</script>
