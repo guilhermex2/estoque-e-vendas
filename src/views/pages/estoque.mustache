@@ -7,32 +7,13 @@
     <title>Sistema - Estoque</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo"><h1>DevEstoque</h1></div>
-        </div>
-    </header>
+    {{>partials/header}}
 
     <section class="main">
-        <div class="menu">
-            <div class="buttons">
-                <a href="/" class="estoque-btn">ESTOQUE</a>
-                <a href="/entrada&saidas" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
-                <a href="/cadastro" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
-                <a href="/vendas" class="vendas-btn">VENDAS</a>
-                <a href="/suporte" class="suporte-btn">SUPORTE</a>
-            </div>
-        </div>
-        <dialog id="modal"> 
-          <div class="area-prod-modal">
-            <div class="nome-modal">...</div>
-            <div class="codigo-modal">...</div>
-            <div class="validade-modal">...</div>
-            <div class="lote-modal">...</div>
-            <div class="tipo-modal">...</div>
-            <div class="preco-modal">...</div>
-            <div class="observacoes-modal">...</div>
-            <div class="estoque-modal">...</div>
+        {{>partials/menu}}
+        <dialog id="modal">
+            <h1>Observações do produto</h1>
+            <div class="observacoes-modal">{{observacoes}}</div>
             <button class="fechar-modal">Fechar</button>
           </div>   
         </dialog>
@@ -52,7 +33,7 @@
                     </thead>
                     <tbody>
                       {{#produtos}}
-                      <tr data-codigo="{{codigo}}" data-nome="{{nome}}" data-validade="{{validade}}" data-lote="{{lote}}" data-preco="{{preco}}" data-estoque="{{estoqueInicial}}">
+                      <tr data-codigo="{{codigo}}" data-nome="{{nome}}" data-observacoes="{{observacoes}}" data-validade="{{validade}}" data-lote="{{lote}}" data-preco="{{preco}}" data-estoque="{{estoqueInicial}}">
                         <td>{{codigo}}</td>
                         <td>{{nome}}</td>
                         <td>{{validade}}</td>
@@ -73,36 +54,5 @@
             </div>
         </div>
     </section>
-    <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            const deleteIcons = document.querySelectorAll(".delete-icon");
-
-              deleteIcons.forEach(icon => {
-                icon.addEventListener("click", async function () {
-                const row = this.closest("tr"); // Obtém a linha da tabela
-                const codigo = row.dataset.codigo; // Obtém o código do produto
-
-                if (!codigo) return;
-
-                const confirmDelete = confirm(`Tem certeza que deseja excluir o item com código ${codigo}?`);
-                if (!confirmDelete) return;
-
-                try {
-                    const response = await fetch(`/${codigo}`, {
-                        method: "DELETE",
-                    });
-
-                    if (response.ok) {
-                        row.remove(); // Remove a linha da tabela
-                        alert("Produto removido com sucesso!");
-                    } else {
-                        alert("Erro ao remover o produto.");
-                    }
-                } catch (error) {
-                    console.error("Erro ao remover produto:", error);
-                }
-            });
-        });
-    });
-
+    <script src="/js/estoque.js">
     </script>

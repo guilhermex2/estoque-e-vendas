@@ -7,22 +7,10 @@
     <title>Sistema - Estoque</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo"><h1>DevEstoque</h1></div>
-        </div>
-    </header>
+    {{>partials/header}}
 
     <section class="main">
-        <div class="menu">
-            <div class="buttons">
-                <a href="/" class="estoque-btn">ESTOQUE</a>
-                <a href="/entrada&saidas" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
-                <a href="/cadastro" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
-                <a href="/vendas" class="vendas-btn">VENDAS</a>
-                <a href="/suporte" class="suporte-btn">SUPORTE</a>
-            </div>
-        </div>
+        {{>partials/menu}}
         <div class="area">
             <div class="container-estoque">
                 <table>
@@ -41,12 +29,18 @@
                           <td>{{codigo}}</td>
                           <td>{{nomeProduto}}</td>
                           <td>{{quantidade}}</td>
-                          <td>{{precoTotal}}</td>
+                          <td>R$: {{precoTotal}}</td>
                           <td>{{dataVenda}}</td>
                       </tr>
                     {{/vendas}}
                     </tbody>
                   </table>
             </div>
-            <button class="voltar"><a href="/entrada&saidas">Voltar</a></button>
+            <div class="btns">
+                <button class="voltar"><a href="/entrada&saidas">Voltar</a></button>
+                <button class="limpar" onclick="(limparSaidas())"><a href="">Limpar Registros</a></button>
+            </div>
         </div>
+
+<script src="/js/saidas.js">
+</script>

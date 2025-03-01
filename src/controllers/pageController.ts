@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGO_URI as string)
 export const home = async (req: Request, res: Response) => {
     try {
         const produtos = await produto.find({},
-            "nome validade lote preco codigo estoqueInicial"
+            "nome validade lote preco codigo estoqueInicial observacoes"
         )
         
         console.log("Produtos encontrados:", produtos); // Verifica se os dados estão sendo carregados
@@ -183,6 +183,17 @@ export const deletaProduto = async (req: Request, res: Response): Promise<void> 
 export const limpaRegistros = async (req: Request, res: Response) => {
     try {
         await Entrada.deleteMany({}); // Remove todos os registros da coleção "entradas"
+        console.log("Todas as entradas foram removidas.");
+        res.status(200).json({ message: "Entradas removidas com sucesso." });
+    } catch (error) {
+        console.error("Erro ao limpar entradas:", error);
+        res.status(500).json({ message: "Erro ao limpar entradas." });
+    }
+}
+
+export const limparSaidas = async (req: Request, res: Response) => {
+    try {
+        await Venda.deleteMany({}); // Remove todos os registros da coleção "entradas"
         console.log("Todas as entradas foram removidas.");
         res.status(200).json({ message: "Entradas removidas com sucesso." });
     } catch (error) {

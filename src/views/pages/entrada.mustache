@@ -7,22 +7,10 @@
     <title>Sistema - Estoque</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo"><h1>DevEstoque</h1></div>
-        </div>
-    </header>
+    {{>partials/header}}
 
     <section class="main">
-        <div class="menu">
-            <div class="buttons">
-                <a href="/" class="estoque-btn">ESTOQUE</a>
-                <a href="/entrada&saidas" class="entrada-saida-btn">ENTRADA - SAIDAS</a>
-                <a href="/cadastro" class="cadastro-produto-btn">CADASTRO PRODUTO</a>
-                <a href="/vendas" class="vendas-btn">VENDAS</a>
-                <a href="/suporte" class="suporte-btn">SUPORTE</a>
-            </div>
-        </div>
+        {{>partials/menu}}
         <div class="area">
             <div class="container-estoque">
                 <table>
@@ -58,17 +46,6 @@
             </div>
         </div>
     </section>
-    <script>
-        async function limparEntradas() {
-            if (confirm("Tem certeza que deseja limpar todas as entradas?")) {
-                const response = await fetch('/limpar-entradas', { method: 'DELETE' });
-                if (response.ok) {
-                    alert("Entradas removidas com sucesso!");
-                    location.reload();
-                } else {
-                    alert("Erro ao limpar as entradas.");
-                }
-            }
-        }
+    <script src="/js/entrada.js">
     </script>
     
